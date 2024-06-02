@@ -1,0 +1,5 @@
+train: train.txt
+val: val.txt
+
+nc: 6
+names: ["car", "truck", "bus", "motorbike", "van", "threewheel"]

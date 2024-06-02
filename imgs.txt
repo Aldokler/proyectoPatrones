@@ -1,0 +1,4 @@
+https://www.motor.mapfre.es/consejos-practicos/seguridad-vial/diferencia-autopista-autovia/
+
+Vehicle dataset:
+https://datasetninja.com/vehicle-dataset-for-yolo
