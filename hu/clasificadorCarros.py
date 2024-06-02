@@ -38,22 +38,25 @@ def analizarDigito(imagen, estadistico):
     """
     
     momentoImagen = momentoHu(imagen)
-    print(momentoImagen)
     media = estadistico[0] 
     var = estadistico[1]
-    return distancia_euclidiana(momentoImagen, media, var)
+    distancia = distancia_euclidiana(momentoImagen, media, var)
+    return distancia
 
 
-def clasificar(imagen, umbral):
-
+def clasificar(imagen):
+    lista = []
     for i in range(len(estadisticos)):
         analisis = analizarDigito(imagen, estadisticos[i])
-        if analisis < umbral:
-            return modelos[i]
-    return "Photo not recognized"
+        lista.append(analisis)
+    return lista
+
+    
+
+
     
 
 modelos = ["Bus", "Car", "Motorbike", "Three Wheel", "Truck", "Van"]
 cargarEstadisticas("estadistico")
-imagen = cv.imread("8247421385_9297379bf8_w.jpg", cv.IMREAD_GRAYSCALE)
-print(clasificar(imagen, 50))
+imagen = cv.imread("1N7TMM2A99ZL.jpg", cv.IMREAD_GRAYSCALE)
+print(clasificar(imagen))
