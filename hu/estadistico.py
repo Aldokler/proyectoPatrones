@@ -14,7 +14,7 @@ def calcular_estadisticas(archivo_entrada, archivo_salida):
     
     # Calcular medias y varianzas
     medias = np.mean(data, axis=0)
-    varianzas = np.var(data, axis=0)
+    varianzas = np.std(data, axis=0)
 
     # Escribir resultados en el archivo de salida
     with open(archivo_salida, 'w') as f:
@@ -23,6 +23,6 @@ def calcular_estadisticas(archivo_entrada, archivo_salida):
     
     print(f"Modelo estadístico con media y varianza calculadas en {archivo_salida}")
 
-archivo_entrada = "truck" + "Model.txt"
-archivo_salida = "truck" + "ModelEstadistico.txt"
+archivo_entrada = "motorbike" + "Model.txt"
+archivo_salida = "motorbike" + "ModelEstadistico.txt"
 calcular_estadisticas(archivo_entrada, archivo_salida)

@@ -18,7 +18,7 @@ def cargarEstadisticas(folder):
 def momentoHu(img):
     moments = cv.moments(img)
     huMoments = cv.HuMoments(moments)
-    return [-1 * math.copysign(1.0, hu) * math.log10(abs(hu)) for hu in huMoments.flatten()]
+    return huMoments.flatten()
 
 
 def distancia_euclidiana(hist, media, varianza):
@@ -51,12 +51,10 @@ def clasificar(imagen):
         lista.append(analisis)
     return lista
 
-    
-
-
-    
-
 modelos = ["Bus", "Car", "Motorbike", "Three Wheel", "Truck", "Van"]
 cargarEstadisticas("estadistico")
-imagen = cv.imread("1N7TMM2A99ZL.jpg", cv.IMREAD_GRAYSCALE)
-print(clasificar(imagen))
+imagen = cv.imread("1KK1PZ28Q72R.jpg", cv.IMREAD_GRAYSCALE)
+L = clasificar(imagen)
+print(modelos[np.argmin(L)])
+
+
