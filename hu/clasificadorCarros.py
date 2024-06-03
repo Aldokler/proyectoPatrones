@@ -1,4 +1,5 @@
 import os
+import json
 import numpy as np
 import math
 import cv2 as cv
@@ -14,12 +15,10 @@ def cargarEstadisticas(folder):
                 varianzas = [float(num) for num in file.readline().split()]
             estadisticos.append((medias, varianzas))
 
-
 def momentoHu(img):
     moments = cv.moments(img)
     huMoments = cv.HuMoments(moments)
     return huMoments.flatten()
-
 
 def distancia_euclidiana(hist, media, varianza):
     """
@@ -43,7 +42,6 @@ def analizarDigito(imagen, estadistico):
     distancia = distancia_euclidiana(momentoImagen, media, var)
     return distancia
 
-
 def clasificar(imagen):
     lista = []
     for i in range(len(estadisticos)):
@@ -51,8 +49,31 @@ def clasificar(imagen):
         lista.append(analisis)
     return lista
 
-modelos = ["Bus", "Car", "Motorbike", "Three Wheel", "Truck", "Van"]
+modelos = ["bus", "car", "motorbike", "threewheel", "truck", "van"]
 cargarEstadisticas("estadistico")
+resultados = []
+
+for i in os.listdir("../datasets/valid"):
+    test = False
+
+    img = cv.imread("../datasets/valid/"+i, cv.IMREAD_GRAYSCALE)
+
+    tipo = modelos[np.argmin(clasificar(img))]
+
+    imgJson = "../Vehicle-dataset/valid/ann/"+i+".json"
+    with open(imgJson, 'r') as f:
+        data = json.load(f)
+    
+    for obj in data['objects']:
+        class_id = obj['classTitle']
+        if class_id == tipo:
+            test = True
+            break
+    
+    resultados.append(test)
+
+print(f'Porcentaje de que la pegó: {resultados.count(True)*100/len(resultados)}')
+
 imagen = cv.imread("1KK1PZ28Q72R.jpg", cv.IMREAD_GRAYSCALE)
 L = clasificar(imagen)
 print(modelos[np.argmin(L)])
